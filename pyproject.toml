@@ -1,5 +1,5 @@
 [project]
-name = "MyAutoDiar"
+name = "MyAutoDiary"
 version = "0.1.0"
 description = "ActivityWatchとDiscordのログからAIが自動で生成する日記ツール"
 readme = "README.md"
