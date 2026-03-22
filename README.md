@@ -61,6 +61,11 @@ cp .env.example .env
 ```bash
 uv run streamlit run main.py
 ```
+<br>
+<div align="center">
+  <img src="assets/screenshots/main_ui.png" width="500">
+</div>
+<br>
 
 1. 日付を選び **「データを集計」** をクリック。
 2. プレビューを確認し、AIに見られたくないログがあればここで直接削除・修正します。
