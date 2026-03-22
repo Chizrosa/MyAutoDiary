@@ -81,6 +81,8 @@ uv run streamlit run main.py
 
 ```text
 MyAutoDiary/
+├── assets/            # スクリーンショットなどの静的ファイルを格納
+│   └── screenshots/   # README表示用の画像を保存
 ├── main.py            # メインの実行プログラム（AIモデルの指定やフィルター設定）
 ├── ui_parts.py        # 画面のUI（見た目）を構成するファイル
 ├── prompt.txt         # AIへの指示書（プロンプト・日記のトーン等をここで調整）
