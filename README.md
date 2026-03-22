@@ -16,6 +16,14 @@ ActivityWatchのログとDiscordのつぶやきから、AIが1日の日記を自
 
 ## セットアップ
 
+> [!IMPORTANT]
+> **本ツールの実行には [ActivityWatch](https://activitywatch.net/) がバックグラウンドで起動している必要があります。**
+> 起動していない場合、データの集計時にエラーが発生します。
+
+> [!CAUTION]
+> **`.env` ファイルは絶対に GitHub 等に公開しないでください。**
+> あなたの Gemini API キーが盗まれ、悪用される危険があります。
+
 **【必要なもの】**
 * [uv](https://github.com/astral-sh/uv) (Pythonパッケージマネージャー)
 * [ActivityWatch](https://activitywatch.net/) (ローカルで起動しておく)
