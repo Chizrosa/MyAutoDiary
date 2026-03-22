@@ -24,7 +24,7 @@ ActivityWatchのログとDiscordのつぶやきから、AIが1日の日記を自
 
 **【インストールと設定】**
 ```bash
-git clone [https://github.com/chizrosa/MyAutoDiary.git](https://github.com/chizrosa/MyAutoDiary.git)
+git clone https://github.com/chizrosa/MyAutoDiary.git
 cd MyAutoDiary
 uv sync
 cp .env.example .env
