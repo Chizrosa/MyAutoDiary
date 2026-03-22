@@ -15,6 +15,26 @@ from dotenv import load_dotenv
 # --- 0. 設定と定数 ---
 load_dotenv()
 
+# 門番（セットアップチェック）
+def check_env():
+    # 1. ActivityWatchの起動確認
+    try:
+        requests.get("http://localhost:5600/api/0/ping", timeout=1)
+    except:
+        st.error("## ⚠️ ActivityWatch が起動していません")
+        st.info("日記を生成するには、ActivityWatchを立ち上げておく必要があります。[公式サイトはこちら](https://activitywatch.net/)")
+        st.stop()
+
+    # 2. .envの設定（APIキー）確認
+    import os
+    if not os.getenv("GEMINI_API_KEY"):
+        st.warning("## ⚠️ APIキーが設定されていません")
+        st.info("`.env` ファイルを作成し、`GEMINI_API_KEY` を記入してください。詳細はREADMEを確認してください。")
+        st.stop()
+
+# 起動時に真っ先に実行
+check_env()
+
 # GitHub公開用：デフォルトの保存先をプロジェクト内の "diaries" フォルダに変更
 # 必要に応じて .env で上書きできるようにするとより親切です
 DEFAULT_SAVE_PATH = os.getenv("SAVE_DIR", "./diaries")
