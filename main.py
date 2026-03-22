@@ -24,13 +24,14 @@ SAVE_DIR.mkdir(parents=True, exist_ok=True)
 # 使用するAIモデル（一箇所で管理）
 GEMINI_MODEL = "gemini-3.1-flash-lite-preview" 
 
-# 秘匿したいアプリのカテゴリ設定
+# 秘匿したいアプリのカテゴリ設定（秘匿したくない場合はコメントアウト）
 SENSITIVE_APPS = {
     "WINWORD.EXE": "執筆作業（原稿）",
     "EXCEL.EXE": "事務作業（資料）",
     "WindowsTerminal.exe": "システム開発・設定",
-    "Hayaemon.exe": "音声編集作業",
     "iAWriter.exe": "創作活動",
+    "chrome.exe": "ブラウジング（調査・執筆）",
+    "msedge.exe": "ブラウジング（仕事関連）",
     "ms-teams.exe": "オンライン会議",
 }
 
@@ -153,7 +154,7 @@ def get_weather(target_date):
         return f"天気データ取得失敗 ({e})"
 
 # --- 2. 画面構成 ---
-st.set_page_config(page_title="My AI Diary", page_icon="🌙", layout="centered")
+st.set_page_config(page_title="My Auto Diary", page_icon="🌙", layout="centered")
 ui_parts.apply_global_style()
 
 logical_now = get_logical_date()
@@ -166,7 +167,7 @@ target_date = st.sidebar.date_input("📅 日記の日付", value=logical_now)
 tab1, tab2 = st.tabs(["📝 今日を書く", "📚 過去を振り返る"])
 
 with tab1:
-    if st.sidebar.button("✨ データを集集計"):
+    if st.sidebar.button("✨ データを集計"):
         with st.spinner("集計中..."):
             aw_result = get_aw_summary(target_date)
             st.session_state.aw_ai = aw_result["ai"]
@@ -195,9 +196,17 @@ with tab1:
                     with open(prompt_path, "r", encoding="utf-8") as f:
                         instruction = f.read()
                     
-                    final_input = f"{instruction}\n\n### ログとメモ：\n{edited_logs}\n\n【追記メモ】:\n{memo}"
-                    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-                    response = client.models.generate_content(model=GEMINI_MODEL, contents=final_input)
+                    full_prompt = instruction.format(
+                        target_date=target_date,
+                        weather_data=weather_data,
+                        aw_data=edited_logs,
+                        dc_data=dc_data,
+                        memo=memo
+                    )
+
+                    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+                    model = genai.GenerativeModel(GEMINI_MODEL)
+                    response = model.generate_content(full_prompt)
                     st.session_state.result = response.text
                 except Exception as e:
                     st.error(f"エラー: {e}")
