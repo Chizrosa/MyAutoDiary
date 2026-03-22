@@ -10,6 +10,16 @@ ActivityWatchのログとDiscordのつぶやきから、AIが1日の日記を自
 * **AI自動執筆**: ログと天候データを統合し、Geminiが自然な一人称の日記を作成。
 * **夜更かし対応**: 午前3時までの活動は「前日の日記」として扱います。
 
+## 技術スタック
+* **Language**: Python 3.14+
+* **Package Manager**: [uv](https://github.com/astral-sh/uv) 
+* **Web UI**: [Streamlit](https://streamlit.io/) 
+* **AI Engine**: [Gemini API](https://aistudio.google.com/)
+* **Data Sources**:
+    * [ActivityWatch](https://activitywatch.net/) (ローカル活動ログ)
+    * [Discord API](https://discord.com/developers/docs/intro) (感情/思考ログ)
+    * [Open-Meteo](https://open-meteo.com/) (気象データ)
+
 ## API料金とプライバシーについて
 * **無料運用が可能**: Gemini API（Google AI Studio）の無料ティアの範囲内で運用可能です（1日の終わりに1回～数回程度の実行を想定）。
 * **プライバシーの注意**: 無料枠のAPIはGoogleの学習に利用される可能性があります。絶対に外部に漏らしたくない機密情報等は、送信前の画面でログから削除してください。
