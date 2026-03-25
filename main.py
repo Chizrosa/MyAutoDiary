@@ -44,7 +44,7 @@ SAVE_DIR.mkdir(parents=True, exist_ok=True)
 # 使用するAIモデル（一箇所で管理）
 GEMINI_MODEL = "gemini-3.1-flash-lite-preview" 
 
-# 秘匿したいアプリのカテゴリ設定（秘匿したくない場合はコメントアウト）
+# 詳細を秘匿したいアプリのカテゴリ設定（秘匿したくない場合はコメントアウト）
 SENSITIVE_APPS = {
     "WINWORD.EXE": "執筆作業（原稿）",
     "EXCEL.EXE": "事務作業（資料）",
@@ -216,8 +216,12 @@ with tab1:
                     with open(prompt_path, "r", encoding="utf-8") as f:
                         instruction = f.read()
                     
+                    weekdays = ["月", "火", "水", "木", "金", "土", "日"]
+                    weekday_str = weekdays[target_date.weekday()]
+                    perfect_date = f"{target_date.year}年{target_date.month}月{target_date.day}日（{weekday_str}曜日）"
+                    
                     full_prompt = instruction.format(
-                        target_date=target_date,
+                        target_date=perfect_date,
                         weather_data=weather_data,
                         aw_data=edited_logs,
                         dc_data=dc_data,
