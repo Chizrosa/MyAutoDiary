@@ -176,7 +176,15 @@ def cat_run():
     """, unsafe_allow_html=True)
 
 # ユーティリティ（送信前チェックエリアはStreamlit標準パーツを使うため整理）
-def render_review_area(target_date, weather, aw_ai, dc):
-    st.markdown("<br><label style='color: #9947eb; font-weight:700;'>📂 AI Submission Preview</label>", unsafe_allow_html=True)
-    review_text = f"【日付】: {target_date}\n【天気】: {weather}\n\n【活動ログ】:\n{aw_ai}\n\n【Discord】:\n{dc}"
-    return st.text_area("内容の最終確認（編集可）", value=review_text, height=300, label_visibility="collapsed")
+# ui_parts.py
+def render_review_area(target_date, weather_data, aw_data, dc_data):
+    st.subheader("プレビューと編集")
+
+    # ActivityWatchの編集
+    edited_aw = st.text_area("ActivityWatchログ (編集可)", value=aw_data, height=200)
+
+    # Discordの編集を追加
+    edited_dc = st.text_area("Discordログ (編集可)", value=dc_data, height=200)
+
+    # 2つの編集結果をタプルで返す
+    return edited_aw, edited_dc

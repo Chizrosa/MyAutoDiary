@@ -204,8 +204,11 @@ with tab1:
     
     memo = st.text_area("✍️ 付け加えたいこと", placeholder="今日あったことや、AIに伝えたいことを書いてください。", height=150)
 
+    # --- main.py の変更部分 ---
+
     if st.session_state.get("is_collected"):
-        edited_logs = ui_parts.render_review_area(
+        # 変更: 受け取る変数を2つにする
+        edited_aw_logs, edited_dc_logs = ui_parts.render_review_area(
             target_date, weather_data, st.session_state.get("aw_ai", "（未取得）"), dc_data
         )
 
@@ -223,8 +226,8 @@ with tab1:
                     full_prompt = instruction.format(
                         target_date=perfect_date,
                         weather_data=weather_data,
-                        aw_data=edited_logs,
-                        dc_data=dc_data,
+                        aw_data=edited_aw_logs,  # 変更: AWの編集後データ
+                        dc_data=edited_dc_logs,  # 変更: Discordの編集後データに差し替え
                         memo=memo
                     )
 
